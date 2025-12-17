@@ -24,6 +24,7 @@ def insert_todo(title, completed):
     return [{'id': cursor.lastrowid, 'title': title, 'completed': completed}]
 
 def select_todo(id = None):
+  sql = None
   if id == None:
     sql = 'SELECT * FROM todos WHERE completed = 0'
   elif id > 0:
