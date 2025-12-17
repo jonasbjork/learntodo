@@ -60,7 +60,11 @@ def mark_completed(todo_id):
 # DELETE /todo/1 - radera en uppgift
 @app.route('/todo/<int:todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
-  return "delete todo"
+  with sqlite3.connect('todo.db') as conn:
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM todos WHERE id = ?', str(todo_id))
+    conn.commit()
+  return jsonify({'message': 'Task deleted', 'id': todo_id}), 200
 
 
 
