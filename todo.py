@@ -19,12 +19,28 @@ init_db()
 # POST /todo - lägga till en uppgift
 @app.route('/todo', methods=['POST'])
 def create_todo():
-  return "None"
+  return "post todo"
 
 # GET /todo - hämta alla uppgifter
+@app.route('/todo', methods=['GET'])
+def get_todos():
+  return "get todos"
+
 # GET /todo/1 - hämtar en specifik uppgift
+@app.route('/todo/<int:todo_id>', methods=['GET'])
+def get_todo(todo_id):
+  return "get todo"
+
 # PUT /todo/1 - markera som klar
+@app.route('/todo/<int:todo_id>', methods=['PUT'])
+def mark_completed(todo_id):
+  return "mark complete"
+
 # DELETE /todo/1 - radera en uppgift
+@app.route('/todo/<int:todo_id>', methods=['DELETE'])
+def delete_todo(todo_id):
+  return "delete todo"
+
 
 
 
