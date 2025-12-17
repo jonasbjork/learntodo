@@ -28,11 +28,15 @@ def create_todo():
     new_task_id = cursor.lastrowid
   return jsonify({'id': new_task_id, 'title': title, 'completed': False}), 201
 
-
 # GET /todo - hämta alla uppgifter
 @app.route('/todo', methods=['GET'])
 def get_todos():
-  return "get todos"
+  with sqlite3.connect('todo.db') as conn:
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM todos')
+    todos = cursor.fetchall()
+    todo_list = [ {'id': row[0], 'title': row[1], 'completed': bool(row[2]) } for row in todos ]
+  return jsonify(todo_list), 200
 
 # GET /todo/1 - hämtar en specifik uppgift
 @app.route('/todo/<int:todo_id>', methods=['GET'])
